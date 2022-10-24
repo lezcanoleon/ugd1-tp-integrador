@@ -29,5 +29,8 @@
     <ClInclude Include="pedir.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="consultas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

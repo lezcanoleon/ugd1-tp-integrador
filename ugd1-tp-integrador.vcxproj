@@ -131,6 +131,7 @@
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="consultas.h" />
     <ClInclude Include="functions.h" />
     <ClInclude Include="pedir.h" />
     <ClInclude Include="struct.h" />

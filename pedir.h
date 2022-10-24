@@ -118,10 +118,10 @@ int pedirFecha(char string[20])
 	return fecha;
 }
 
-int pedirOpciones(int cantOpciones, char string[40], char opcion1[6], char opcion2[6], char opcion3[6], char opcion4[6])
+int pedirOpciones(int cantOpciones, char string[40], char opcion1[20], char opcion2[20], char opcion3[20], char opcion4[20])
 {
 	int opcionElegida;
-	char str[7];
+	char str[20];
 
 	if (cantOpciones == 3)
 	{

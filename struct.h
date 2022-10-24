@@ -31,3 +31,24 @@ struct unidadSangre
 {
 	int numeroGuia, fechaVencimiento, fechaExtraccion, grupoSanguineo, factorRh;
 };
+
+struct sanatorio
+{
+	char nombre[50], direccion[50];
+	int sectores[7];
+};
+
+struct transfusion
+{
+	int numeroGuia, hemocomponente;
+	char nombrePaciente[50];
+	int fechaTransfusion, mtrMedSolicitante;
+	char especialidadMedico[30];
+	int sector;
+
+	struct tecnico
+	{
+		char nombre[50];
+		int dni;
+	}tecnico;
+};
