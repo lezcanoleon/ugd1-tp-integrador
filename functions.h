@@ -417,6 +417,7 @@ void cargaSanatorioTransfusiones()
 					sanatorioEncontrado = 1;
 					fseek(FILEsanatorios, (-1) * sizeof(struct sanatorio), SEEK_CUR);
 					printf("Sanatorio encontrado.\n");
+					strcpy(transfusion.nombreSanatorio, sanatorio.nombre);
 
 					printf("Desea agregar una transfusion al registro?\n[1] Si\n[0] No\n");
 					scanf("%d", &flag);

@@ -40,6 +40,7 @@ struct sanatorio
 
 struct transfusion
 {
+	char nombreSanatorio[50];
 	int numeroGuia, hemocomponente;
 	char nombrePaciente[50];
 	int fechaTransfusion, mtrMedSolicitante;
