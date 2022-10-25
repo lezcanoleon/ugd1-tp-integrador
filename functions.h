@@ -289,6 +289,7 @@ void modificarMedico()
 
 					case 3:
 						printf("Especialidad actual: %s\n", medico.especialidad);
+						flushstdin();
 						pedirString(&medico.especialidad, "Especialidad (medico)");
 						break;
 					}
@@ -387,6 +388,66 @@ void modificarFamiliar()
 		{
 			printf("El DNI no se ha encontrado.");
 		}
+	}
+	else printf("\n[ERROR] No se pudo abrir los archivos.\n");
+}
+
+void modificarSanatorio()
+{
+	struct sanatorio sanatorio;
+	FILE* FILEsanatorios;
+	char nombreBusqueda[50];
+	int nombreEncontrado = 0, opcion;
+
+	if ((FILEsanatorios = fopen("sanatorios.bin", "rb+")) != NULL)
+	{
+		flushstdin();
+		pedirString(&nombreBusqueda, "Nombre del sanatorio a modificar");
+
+		while ((fread(&sanatorio, sizeof(struct sanatorio), 1, FILEsanatorios)) != NULL)
+		{
+			printf("\n\n nombre = %s\n\n", sanatorio.nombre);
+			if (strcmp(nombreBusqueda, sanatorio.nombre) == 0)
+			{
+				printf("Sanatorio encontrado: %s\n\n", sanatorio.nombre);
+				nombreEncontrado = 1;
+
+				printf("Que desea modificar? (Ingrese 0 para salir)\n");
+				printf("[1] Direccion\n");
+
+				scanf("%d", &opcion);
+				while (opcion < 0 || opcion > 1)
+				{
+					printf("El valor ingresado esta fuera de rango.\n");
+					printf("Ingresar opcion nuevamente: ");
+					scanf("%d", &opcion);
+				}
+
+				printf("\n");
+				switch (opcion)
+				{
+				case 0:
+					fseek(FILEsanatorios, 0, SEEK_END);
+					break;
+
+				case 1:
+					printf("Direccion actual: %s\n", sanatorio.direccion);
+					flushstdin();
+					pedirString(&sanatorio.direccion, "Direccion nueva");
+					fseek(FILEsanatorios, (-1) * (sizeof(struct sanatorio)), SEEK_CUR);
+					fwrite(&sanatorio, sizeof(struct sanatorio), 1, FILEsanatorios);
+					fseek(FILEsanatorios, 0, SEEK_END);
+					break;
+				}
+			}
+		}
+
+		if (nombreEncontrado == 0)
+		{
+			printf("El sanatorio no se ha encontrado.");
+		}
+
+		fclose(FILEsanatorios);
 	}
 	else printf("\n[ERROR] No se pudo abrir los archivos.\n");
 }

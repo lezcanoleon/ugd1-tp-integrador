@@ -95,7 +95,8 @@ main()
 				modificarMedico();
 				break;
 			case 5:
-				printf("\nUsted ha accedido a la modificación de sanatorio o sectores.\n");
+				printf("\nUsted ha accedido a la modificación de sanatorios.\n");
+				modificarSanatorio();
 				break;
 			case 6:
 				printf("\nUsted ha accedido a la modificación de datos de transfusiones.\n");
