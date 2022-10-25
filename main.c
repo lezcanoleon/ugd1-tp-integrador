@@ -123,7 +123,8 @@ main()
 			break;
 
 		case 2:
-			printf("Los 5 médicos que mas transfusiones realizaron son: \n");
+			printf("\nUsted ha accedido a la consulta de medicos con mas transfusiones solicitadas\n\n");
+			top5medicos();
 			break;
 
 		case 3:

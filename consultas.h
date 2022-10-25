@@ -1,6 +1,6 @@
 #pragma once
 
-consultarEntreFechas()
+void consultarEntreFechas()
 {
 	FILE* BINtransfusiones;
 	struct transfusion transfusion;
@@ -28,6 +28,7 @@ consultarEntreFechas()
 				transfusionEncontrada = 1;
 				printf("____________TRANSFUSION AL PACIENTE %s____________\n\n", transfusion.nombrePaciente);
 
+				printf("Sanatorio donde se realizo la transfusion: %s\n", transfusion.nombreSanatorio);
 				printf("Fecha de la transfusion: %d\n", transfusion.fechaTransfusion);
 				printf("Numero guia de la unidad de sangre utilizada: %d\n", transfusion.numeroGuia);
 				if (transfusion.hemocomponente == 1) printf("Hemocomponente utilizado: Globulos rojos.\n");
@@ -56,5 +57,85 @@ consultarEntreFechas()
 	}
 	else printf("Error al abrir el archivo <transfusiones.bin>");
 
+	return;
+}
+
+void top5medicos()
+{
+	FILE* BINsolicitudes, * BINtransfusiones;
+	struct transfusion transfusion;
+	struct solicitudesMedico solicitudesMedico;
+	int matrizMedico[5][2], f, c, medicoEncontrado = 0;
+
+	for (f = 0; f < 5; f++)
+	{
+		for (c = 0; c < 2; c++)
+		{
+			matrizMedico[f][c] = 0;
+		}
+	}
+
+	if ((BINsolicitudes = fopen("solicitudes.bin", "wb")) != NULL)
+	{
+		if ((BINtransfusiones = fopen("transfusiones.bin", "rb")) != NULL)
+		{
+			while ((fread(&transfusion, sizeof(struct transfusion), 1, BINtransfusiones)) != NULL)
+			{
+				while ((fread(&solicitudesMedico, sizeof(struct solicitudesMedico), 1, BINsolicitudes)) != NULL)
+				{
+					if (transfusion.mtrMedSolicitante == solicitudesMedico.matricula)
+					{
+						medicoEncontrado = 1;
+						solicitudesMedico.cantTransfusiones++;
+						fseek(BINsolicitudes, (-1) * sizeof(struct solicitudesMedico), 1, SEEK_CUR);
+						fwrite(&solicitudesMedico, sizeof(struct solicitudesMedico), 1, BINsolicitudes);
+					}
+				}
+
+				if (medicoEncontrado == 0)
+				{
+					fseek(BINsolicitudes, 0, SEEK_END);
+					solicitudesMedico.matricula = transfusion.mtrMedSolicitante;
+					solicitudesMedico.cantTransfusiones = 1;
+					fwrite(&solicitudesMedico, sizeof(struct solicitudesMedico), 1, BINsolicitudes);
+				}
+
+				rewind(BINsolicitudes);
+			}
+			fclose(BINtransfusiones);
+		}
+		else printf("Error al abrir el archivo <transfusiones.bin>");
+		fclose(BINsolicitudes);
+	}
+	else printf("Error al abrir el archivo <solicitudes.bin>");
+
+	if ((BINsolicitudes = fopen("solicitudes.bin", "rb")) != NULL)
+	{
+		while ((fread(&solicitudesMedico, sizeof(struct solicitudesMedico), 1, BINsolicitudes)) != NULL)
+		{
+			for (f = 0; f < 5; f++)
+			{
+				if (solicitudesMedico.cantTransfusiones > matrizMedico[f][2])
+				{
+					matrizMedico[f][0] = solicitudesMedico.matricula;
+					matrizMedico[f][1] = solicitudesMedico.cantTransfusiones;
+					break;
+				}
+			}
+		}
+		fclose(BINsolicitudes);
+	}
+	else printf("Error al abrir el archivos <solicitudes.bin>");
+
+	printf("Los 5 medicos con mas transfusiones solicitadas son:\n");
+	printf("MATRICULA\tSOLICITUDES\n");
+	for (f = 0; f < 5; f++)
+	{
+		if (matrizMedico[f][0] != 0)
+		{
+			printf("%d\t\t%d transfusion(es)\n", matrizMedico[f][0], matrizMedico[f][1]);
+		}
+		else printf("[No hay datos]\t[No hay datos]\n");
+	}
 	return;
 }

@@ -53,3 +53,8 @@ struct transfusion
 		int dni;
 	}tecnico;
 };
+
+struct solicitudesMedico
+{
+	int matricula, cantTransfusiones;
+};

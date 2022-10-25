@@ -1,0 +1,8 @@
+Nombre del paciente: PACIENTE1
+Fecha de transfusion: 20221024
+Numero guia de la unidad de sangre: 100
+Hemocomponente utilizado: Globulos rojos.
+Medico solicitante (matricula): 10100
+Especialidad del medico: ESPECIALIDADMEDICO
+Nombre del tecnico que realizo el procedimiento: TECNICONOMBRE
+DNI del tecnico que realizo el procedimiento: 20200200

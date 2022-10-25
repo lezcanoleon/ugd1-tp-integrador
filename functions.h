@@ -446,7 +446,7 @@ void cargaSanatorioTransfusiones()
 							scanf("%d", &accion);
 						}
 						sanatorio.sectores[accion - 1]++;
-						transfusion.sector = (accion - 1);
+						transfusion.sector = accion;
 
 						transfusion.numeroGuia = pedirIntEntre(1, 99999, "Numero guia de la unidad de sangre");
 						transfusion.hemocomponente = pedirOpciones(4, "Hemocomponente", "Globulos rojos", "Plaquetas", "Plasma", "Crioprecipitado");
@@ -506,6 +506,7 @@ void cargaSanatorioTransfusiones()
 				{
 				case 1:
 					strcpy(sanatorio.nombre, buffer);
+					strcpy(transfusion.nombreSanatorio, sanatorio.nombre);
 					printf("\nNombre del sanatorio: %s\n", sanatorio.nombre);
 					flushstdin();
 					pedirString(&sanatorio.direccion, "Direccion del sanatorio");
